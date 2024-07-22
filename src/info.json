@@ -1,43 +1,24 @@
 {
-  "identifier": "yetone.openai.translator",
-  "version": "2.3.2",
+  "identifier": "cdpath.claude.translator",
+  "version": "1.0.0",
   "category": "translate",
-  "name": "OpenAI Translator",
-  "summary": "GPT powered translator",
+  "name": "Claude AI Translator",
+  "summary": "Claude AI powered translator",
   "icon": "",
-  "author": "yetone <yetoneful@gmail.com>",
-  "homepage": "https://github.com/yetone/bob-plugin-openai-translator",
-  "appcast": "https://raw.githubusercontent.com/yetone/bob-plugin-openai-translator/main/appcast.json",
+  "author": "cdpath <cdpath@outlook.com>",
+  "homepage": "https://github.com/cdpath/bob-plugin-claude-translator",
+  "appcast": "https://raw.githubusercontent.com/cdpath/bob-plugin-claude-translator/main/appcast.json",
   "minBobVersion": "1.8.0",
   "options": [
     {
       "identifier": "apiUrl",
       "type": "text",
       "title": "API URL",
-      "defaultValue": "https://api.openai.com",
-      "desc": "可选项。如果您的网络环境需要代理才能访问 OpenAI API, 可在这里修改为反代 API 的地址",
+      "defaultValue": "https://api.anthropic.com",
+      "desc": "可选项。如果您的网络环境需要代理才能访问 Claude AI API, 可在这里修改为反代 API 的地址",
       "textConfig": {
         "type": "visible",
-        "placeholderText": "https://api.openai.com"
-      }
-    },
-    {
-      "identifier": "deploymentName",
-      "type": "text",
-      "title": "Dep. Name",
-      "desc": "可选项。此值为在部署 Azure 模型时为部署选择的自定义名称，可在 Azure 门户中的 “资源管理”＞“部署” 下查看",
-      "textConfig": {
-        "type": "visible"
-      }
-    },
-    {
-      "identifier": "apiVersion",
-      "type": "text",
-      "title": "API Version",
-      "desc": "可选项。此值为在使用 Azure 模型时采用的 Chat completions API 版本，不支持 2023-03-15-preview 之前的版本",
-      "textConfig": {
-        "type": "visible",
-        "placeholderText": "2023-03-15-preview"
+        "placeholderText": "https://api.anthropic.com"
       }
     },
     {
@@ -48,57 +29,42 @@
       "textConfig": {
         "type": "secure",
         "height": "40",
-        "placeholderText": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        "placeholderText": "sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
       }
     },
     {
       "identifier": "model",
       "type": "menu",
       "title": "模型",
-      "defaultValue": "gpt-3.5-turbo",
+      "defaultValue": "claude-3-5-sonnet-20240620",
       "menuValues": [
         {
-          "title": "Custom",
-          "value": "custom"
+          "title": "Claude 3.5 Sonnet",
+          "value": "claude-3-5-sonnet-20240620"
         },
         {
-          "title": "GPT-3.5 Turbo",
-          "value": "gpt-3.5-turbo"
+          "title": "Claude 3 Opus",
+          "value": "claude-3-opus-20240229"
         },
         {
-          "title": "GPT-4",
-          "value": "gpt-4"
-        },
-        {
-          "title": "GPT-4o",
-          "value": "gpt-4o"
-        },
-        {
-          "title": "GPT-4o mini",
-          "value": "gpt-4o-mini"
-        },
-        {
-          "title": "GPT-4 Turbo",
-          "value": "gpt-4-turbo"
-        },
-        {
-          "title": "GPT-4 32K",
-          "value": "gpt-4-32k"
+          "title": "Claude 3 Haiku",
+          "value": "claude-3-haiku-20240307"
         }
       ]
     },
     {
-      "identifier": "customModel",
+      "identifier": "apiVersion",
       "type": "text",
-      "title": "自定义模型",
-      "desc": "可选项。当 Model 选择 Custom 时，此项为必填项。请填写有效的模型名称",
+      "title": "API Version",
+      "defaultValue": "2023-06-01",
+      "desc": "可选项。Claude AI API 版本",
       "textConfig": {
         "type": "visible",
-        "placeholderText": "gpt-3.5-turbo"
+        "placeholderText": "2023-06-01"
       }
     },
     {
-      "identifier": "customSystemPrompt",
+      "identifier": "systemPrompt",
       "type": "text",
       "title": "系统指令",
       "defaultValue": "You are a translation engine that can only translate text and cannot interpret it.",
@@ -143,19 +109,19 @@
         },
         {
           "title": "Disable",
-          "value": ""
+          "value": "0"
         }
       ]
     },
     {
-      "identifier": "temperature",
+      "identifier": "maxTokens",
       "type": "text",
-      "title": "温度",
-      "defaultValue": "0.2",
-      "desc": "可选项。温度值越高，生成的文本越随机。默认值为 0.2",
+      "title": "最大 Tokens",
+      "defaultValue": "1024",
+      "desc": "可选项。设置生成回复的最大 token 数量。默认值为 1024",
       "textConfig": {
         "type": "visible",
-        "placeholderText": "0.2"
+        "placeholderText": "1024"
       }
     }
   ]
