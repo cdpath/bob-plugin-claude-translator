@@ -1,5 +1,12 @@
 {
   "identifier": "cdpath.claude.translator",
   "versions": [
+    {
+      "version": "0.0.1",
+      "desc": "update to claude.ai based on openai version",
+      "sha256": "937fc624fe4d8567a7b302f1ba8b9eff8a89f2a6677323c74de7717c621ea38c",
+      "url": "https://github.com/cdpath/bob-plugin-claude-translator/releases/download/v0.0.1/claude-translator-0.0.1.bobplugin",
+      "minBobVersion": "1.8.0"
+    }
   ]
 }
