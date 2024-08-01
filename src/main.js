@@ -1,6 +1,8 @@
 //@ts-check
 
 var lang = require("./lang.js");
+var SYSTEM_PROMPT = require("./const.js").SYSTEM_PROMPT;
+
 var {
   buildHeader,
   ensureHttpsAndNoTrailingSlash,
@@ -18,21 +20,44 @@ var {
  * }}
  */
 function generatePrompts(query) {
-  const { detectFrom, detectTo } = query;
-  const sourceLang = lang.langMap.get(detectFrom) || detectFrom;
-  const targetLang = lang.langMap.get(detectTo) || detectTo;
-  let generatedUserPrompt = `Translate the following text from ${sourceLang} to ${targetLang}:\n\n${query.text}`;
+    let generatedSystemPrompt = SYSTEM_PROMPT;
+    const { detectFrom, detectTo } = query;
+    const sourceLang = lang.langMap.get(detectFrom) || detectFrom;
+    const targetLang = lang.langMap.get(detectTo) || detectTo;
+    let generatedUserPrompt = `translate from ${sourceLang} to ${targetLang}`;
 
-  if (detectTo === "wyw" || detectTo === "yue") {
-    generatedUserPrompt = `翻译成${targetLang}:\n\n${query.text}`;
-  }
+    if (detectTo === "wyw" || detectTo === "yue") {
+        generatedUserPrompt = `翻译成${targetLang}`;
+    }
 
-  if (detectFrom === detectTo) {
-    generatedUserPrompt = `Polish and improve the following text in ${targetLang}:\n\n${query.text}`;
-  }
+    if (
+        detectFrom === "wyw" ||
+        detectFrom === "zh-Hans" ||
+        detectFrom === "zh-Hant"
+    ) {
+        if (detectTo === "zh-Hant") {
+            generatedUserPrompt = "翻译成繁体白话文";
+        } else if (detectTo === "zh-Hans") {
+            generatedUserPrompt = "翻译成简体白话文";
+        } else if (detectTo === "yue") {
+            generatedUserPrompt = "翻译成粤语白话文";
+        }
+    }
+    if (detectFrom === detectTo) {
+        generatedSystemPrompt =
+            "You are a text embellisher, you can only embellish the text, don't interpret it.";
+        if (detectTo === "zh-Hant" || detectTo === "zh-Hans") {
+            generatedUserPrompt = "润色此句";
+        } else {
+            generatedUserPrompt = "polish this sentence";
+        }
+    }
 
-  return { generatedSystemPrompt: $option.systemPrompt, generatedUserPrompt };
+    generatedUserPrompt = `${generatedUserPrompt}:\n\n${query.text}`
+
+    return { generatedSystemPrompt, generatedUserPrompt };
 }
+
 
 /**
  * @param {Bob.TranslateQuery} query
